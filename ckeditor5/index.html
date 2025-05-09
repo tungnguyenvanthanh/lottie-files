@@ -388,8 +388,14 @@
 
         window.editorInstance = null;
 
+		const allowedOrigins = [
+			'https://ttvl.io.vn',
+			'https://xaydungmiendong.vn',
+			'https://localhost:7075'
+		];
+
 		window.addEventListener('message', async (event) => {
-			if (event.origin !== 'https://localhost:7075') return; // kiểm tra bảo mật
+			if (!allowedOrigins.includes(event.origin)) return; // kiểm tra bảo mật
 
 			const { type, data } = event.data;
 
