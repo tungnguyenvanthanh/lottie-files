@@ -388,6 +388,20 @@
 
         window.editorInstance = null;
 
+		window.addEventListener('message', async (event) => {
+			if (event.origin !== 'https://localhost:7075') return; // kiểm tra bảo mật
+
+			const { type, data } = event.data;
+
+				if (type === 'init-editor') {
+					window.initializeCKEditor();
+				}
+				
+				if (type === 'set-content') {
+					window.setContent(data.html);
+				}
+		});
+
         // Gắn vào window để Blazor gọi được
         window.initializeCKEditor = () => {
             ClassicEditor.create(document.querySelector('#editor'), editorConfig)
