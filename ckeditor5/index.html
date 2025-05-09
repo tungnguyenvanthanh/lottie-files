@@ -265,15 +265,11 @@
                     )
 
                     console.log('Entered fullscreen mode', container);
-                    if (window.parent?.onCKEditorFullscreenToggle) {
-                        window.parent.onCKEditorFullscreenToggle(true);
-                    }
+					parent.postMessage({ type: 'full-screen-toggle', true }, '*');
                 },
                 onLeaveCallback: (container) => {
                     console.log('Exited fullscreen mode', container);
-                    if (window.parent?.onCKEditorFullscreenToggle) {
-                        window.parent.onCKEditorFullscreenToggle(false);
-                    }
+					parent.postMessage({ type: 'full-screen-toggle', false }, '*');
                 }
             },
             heading: {
