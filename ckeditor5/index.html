@@ -1,436 +1,120 @@
 <!doctype html>
-<html lang="en">
+<html lang="vi">
 <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="./style.css">
-    <link rel="stylesheet" href="./ckeditor5.css">
+  <meta charset="utf-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./ckeditor5.css">
 </head>
 <body>
-    <div class="main-container">
-        <div class="editor-container editor-container_classic-editor editor-container_include-block-toolbar editor-container_include-word-count editor-container_include-fullscreen"
-             id="editor-container">
-            <div class="editor-container__editor"><div id="editor"></div></div>
-            <div class="editor_container__word-count" id="editor-word-count"></div>
-        </div>
+  <div class="main-container">
+    <div class="editor-container editor-container_classic-editor editor-container_include-block-toolbar editor-container_include-word-count editor-container_include-fullscreen" id="editor-container">
+      <div class="editor-container__editor"><div id="editor"></div></div>
+      <div class="editor_container__word-count" id="editor-word-count"></div>
     </div>
+  </div>
 
-    <script type="module">
-        import {
-            ClassicEditor,
-            Alignment,
-            Autoformat,
-            AutoImage,
-            AutoLink,
-            Autosave,
-            BalloonToolbar,
-            BlockQuote,
-            BlockToolbar,
-            Bold,
-            Bookmark,
-            Code,
-            CodeBlock,
-            Emoji,
-            Essentials,
-            FindAndReplace,
-            FontBackgroundColor,
-            FontColor,
-            FontFamily,
-            FontSize,
-            FullPage,
-            Fullscreen,
-            GeneralHtmlSupport,
-            Heading,
-            Highlight,
-            HorizontalLine,
-            HtmlComment,
-            HtmlEmbed,
-            ImageBlock,
-            ImageCaption,
-            ImageInline,
-            ImageInsert,
-            ImageInsertViaUrl,
-            ImageResize,
-            ImageStyle,
-            ImageTextAlternative,
-            ImageToolbar,
-            ImageUpload,
-            Indent,
-            IndentBlock,
-            Italic,
-            Link,
-            LinkImage,
-            List,
-            ListProperties,
-            MediaEmbed,
-            Mention,
-            PageBreak,
-            Paragraph,
-            PasteFromMarkdownExperimental,
-            PasteFromOffice,
-            PlainTableOutput,
-            RemoveFormat,
-            ShowBlocks,
-            SimpleUploadAdapter,
-            SourceEditing,
-            SpecialCharacters,
-            SpecialCharactersArrows,
-            SpecialCharactersCurrency,
-            SpecialCharactersEssentials,
-            SpecialCharactersLatin,
-            SpecialCharactersMathematical,
-            SpecialCharactersText,
-            Strikethrough,
-            Subscript,
-            Superscript,
-            Table,
-            TableCaption,
-            TableCellProperties,
-            TableColumnResize,
-            TableLayout,
-            TableProperties,
-            TableToolbar,
-            TextTransformation,
-            TodoList,
-            Underline,
-            WordCount
-        } from './ckeditor5.js';
+  <script type="module">
+    const version = Date.now();
+    const allowedOrigins = ['https://ttvl.io.vn', 'https://xaydungmiendong.vn', 'https://localhost:7075'];
+    const LICENSE_KEY = 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDc5NTgzOTksImp0aSI6IjlhYTIzOGQ5LTVmZTgtNGRiNS1iZTQ2LWU5MDU1ZmQ5N2Q3YiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6ImFjYjc4MGYzIn0.r1HikNOx5SoDUmvMKh4zQdmPHZdmjc5fgbU5FFSgl8eX8AjfN8rf9NzLBeK-P8c6X-EZTB15nTe1RLugMxio7A';
 
-        import translations from './translations/vi.js';
+    Promise.all([
+      import(`./ckeditor5.js?v=${version}`),
+      import(`./translations/vi.js?v=${version}`)
+    ]).then(([m, translations]) => {
+      const { ClassicEditor, WordCount, Fullscreen, Alignment, Bold, Italic, Link, ImageInsert, InsertImageViaUrl, TableToolbar, Paragraph, Heading, FontSize, FontColor, FontFamily, SpecialCharacters, Highlight, Indent, List, SourceEditing, FindAndReplace, ShowBlocks, Code, CodeBlock, HtmlEmbed, BlockQuote, RemoveFormat, Emoji, MediaEmbed, PageBreak, HorizontalLine, BlockToolbar, BalloonToolbar, Autosave, PasteFromOffice, GeneralHtmlSupport, ImageToolbar, ImageStyle, ImageResize, ImageTextAlternative, ImageCaption, ImageInline, ImageBlock, Table, TableProperties, TableCellProperties, TableColumnResize, TableCaption, Underline, Strikethrough, Subscript, Superscript, HtmlComment, Bookmark, PasteFromMarkdownExperimental, Mention, SimpleUploadAdapter } = m;
 
-        const LICENSE_KEY = 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDc5NTgzOTksImp0aSI6IjlhYTIzOGQ5LTVmZTgtNGRiNS1iZTQ2LWU5MDU1ZmQ5N2Q3YiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6ImFjYjc4MGYzIn0.r1HikNOx5SoDUmvMKh4zQdmPHZdmjc5fgbU5FFSgl8eX8AjfN8rf9NzLBeK-P8c6X-EZTB15nTe1RLugMxio7A';
-
-        const editorConfig = {
-            toolbar: {
-                items: [
-                    'sourceEditing',
-                    'showBlocks',
-                    'findAndReplace',
-                    'fullscreen',
-                    '|',
-                    'heading',
-                    '|',
-                    'fontSize',
-                    'fontFamily',
-                    'fontColor',
-                    'fontBackgroundColor',
-                    '|',
-                    'bold',
-                    'italic',
-                    'underline',
-                    'strikethrough',
-                    'subscript',
-                    'superscript',
-                    'code',
-                    'removeFormat',
-                    '|',
-                    'emoji',
-                    'specialCharacters',
-                    'horizontalLine',
-                    'pageBreak',
-                    'link',
-                    'bookmark',
-                    'insertImage',
-                    'insertImageViaUrl',
-                    'mediaEmbed',
-                    'insertTable',
-                    'insertTableLayout',
-                    'highlight',
-                    'blockQuote',
-                    'codeBlock',
-                    'htmlEmbed',
-                    '|',
-                    'alignment',
-                    '|',
-                    'bulletedList',
-                    'numberedList',
-                    'todoList',
-                    'outdent',
-                    'indent'
-                ],
-                shouldNotGroupWhenFull: false
-            },
-            plugins: [
-                Alignment,
-                Autoformat,
-                AutoImage,
-                AutoLink,
-                Autosave,
-                BalloonToolbar,
-                BlockQuote,
-                BlockToolbar,
-                Bold,
-                Bookmark,
-                Code,
-                CodeBlock,
-                Emoji,
-                Essentials,
-                FindAndReplace,
-                FontBackgroundColor,
-                FontColor,
-                FontFamily,
-                FontSize,
-                FullPage,
-                Fullscreen,
-                GeneralHtmlSupport,
-                Heading,
-                Highlight,
-                HorizontalLine,
-                HtmlComment,
-                HtmlEmbed,
-                ImageBlock,
-                ImageCaption,
-                ImageInline,
-                ImageInsert,
-                ImageInsertViaUrl,
-                ImageResize,
-                ImageStyle,
-                ImageTextAlternative,
-                ImageToolbar,
-                ImageUpload,
-                Indent,
-                IndentBlock,
-                Italic,
-                Link,
-                LinkImage,
-                List,
-                ListProperties,
-                MediaEmbed,
-                Mention,
-                PageBreak,
-                Paragraph,
-                PasteFromMarkdownExperimental,
-                PasteFromOffice,
-                PlainTableOutput,
-                RemoveFormat,
-                ShowBlocks,
-                SimpleUploadAdapter,
-                SourceEditing,
-                SpecialCharacters,
-                SpecialCharactersArrows,
-                SpecialCharactersCurrency,
-                SpecialCharactersEssentials,
-                SpecialCharactersLatin,
-                SpecialCharactersMathematical,
-                SpecialCharactersText,
-                Strikethrough,
-                Subscript,
-                Superscript,
-                Table,
-                TableCaption,
-                TableCellProperties,
-                TableColumnResize,
-                TableLayout,
-                TableProperties,
-                TableToolbar,
-                TextTransformation,
-                TodoList,
-                Underline,
-                WordCount
-            ],
-            balloonToolbar: ['bold', 'italic', '|', 'link', 'insertImage', '|', 'bulletedList', 'numberedList'],
-            blockToolbar: [
-                'fontSize',
-                'fontColor',
-                'fontBackgroundColor',
-                '|',
-                'bold',
-                'italic',
-                '|',
-                'link',
-                'insertImage',
-                'insertTable',
-                'insertTableLayout',
-                '|',
-                'bulletedList',
-                'numberedList',
-                'outdent',
-                'indent'
-            ],
-            fontFamily: {
-                supportAllValues: true
-            },
-            fontSize: {
-                options: [10, 12, 14, 'default', 18, 20, 22],
-                supportAllValues: true
-            },
-            fullscreen: {
-                onEnterCallback: container => {
-                    container.classList.add(
-                        'editor-container',
-                        'editor-container_classic-editor',
-                        'editor-container_include-block-toolbar',
-                        'editor-container_include-word-count',
-                        'editor-container_include-fullscreen',
-                        'main-container'
-                    )
-
-                    console.log('Entered fullscreen mode', container);
-					parent.postMessage({ type: 'full-screen-toggle', data: true }, '*');
-                },
-                onLeaveCallback: (container) => {
-                    console.log('Exited fullscreen mode', container);
-					parent.postMessage({ type: 'full-screen-toggle', data: false }, '*');
-                }
-            },
-            heading: {
-                options: [
-                    {
-                        model: 'paragraph',
-                        title: 'Paragraph',
-                        class: 'ck-heading_paragraph'
-                    },
-                    {
-                        model: 'heading1',
-                        view: 'h1',
-                        title: 'Heading 1',
-                        class: 'ck-heading_heading1'
-                    },
-                    {
-                        model: 'heading2',
-                        view: 'h2',
-                        title: 'Heading 2',
-                        class: 'ck-heading_heading2'
-                    },
-                    {
-                        model: 'heading3',
-                        view: 'h3',
-                        title: 'Heading 3',
-                        class: 'ck-heading_heading3'
-                    },
-                    {
-                        model: 'heading4',
-                        view: 'h4',
-                        title: 'Heading 4',
-                        class: 'ck-heading_heading4'
-                    },
-                    {
-                        model: 'heading5',
-                        view: 'h5',
-                        title: 'Heading 5',
-                        class: 'ck-heading_heading5'
-                    },
-                    {
-                        model: 'heading6',
-                        view: 'h6',
-                        title: 'Heading 6',
-                        class: 'ck-heading_heading6'
-                    }
-                ]
-            },
-            htmlSupport: {
-                allow: [
-                    {
-                        name: /^.*$/,
-                        styles: true,
-                        attributes: true,
-                        classes: true
-                    }
-                ]
-            },
-            image: {
-                toolbar: [
-                    'toggleImageCaption',
-                    'imageTextAlternative',
-                    '|',
-                    'imageStyle:inline',
-                    'imageStyle:wrapText',
-                    'imageStyle:breakText',
-                    '|',
-                    'resizeImage'
-                ]
-            },
-            initialData: '',
-            language: 'vi',
-            licenseKey: LICENSE_KEY,
-            link: {
-                addTargetToExternalLinks: true,
-                defaultProtocol: 'https://',
-                decorators: {
-                    toggleDownloadable: {
-                        mode: 'manual',
-                        label: 'Downloadable',
-                        attributes: {
-                            download: 'file'
-                        }
-                    }
-                }
-            },
-            list: {
-                properties: {
-                    styles: true,
-                    startIndex: true,
-                    reversed: true
-                }
-            },
-            mention: {
-                feeds: [
-                    {
-                        marker: '@',
-                        feed: [
-                            /* See: https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html */
-                        ]
-                    }
-                ]
-            },
-            menuBar: {
-                isVisible: true
-            },
-            placeholder: 'Nhập nội dung của bạn ở đây',
-            table: {
-                contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties']
-            },
-            translations: [translations]
-        };
-
-        window.editorInstance = null;
-
-		const allowedOrigins = [
-			'https://ttvl.io.vn',
-			'https://xaydungmiendong.vn',
-			'https://localhost:7075'
-		];
-
-		window.addEventListener('message', async (event) => {
-			if (!allowedOrigins.includes(event.origin)) return; // kiểm tra bảo mật
-
-			const { type, data } = event.data;
-
-				if (type === 'init-editor') {
-					window.initializeCKEditor();
-				}
-				
-				if (type === 'set-content') {
-					window.setContent(data.html);
-				}
-		});
-
-        // Gắn vào window để Blazor gọi được
-        window.initializeCKEditor = () => {
-            ClassicEditor.create(document.querySelector('#editor'), editorConfig)
-                .then(editor => {
-                    window.editorInstance = editor;
-
-                    const wordCount = editor.plugins.get('WordCount');
-                    document.querySelector('#editor-word-count').appendChild(wordCount.wordCountContainer);
-
-                    editor.model.document.on('change:data', () => {
-                        const data = editor.getData();
-                        parent.postMessage({ type: 'editor-data', data }, '*');
-                    });
-                });
-        };
-
-
-        window.setContent = (html) => {
-            if (window.editorInstance) {
-                window.editorInstance.setData(html);
+      const editorConfig = {
+        plugins: [
+          WordCount, Fullscreen, Alignment, Bold, Italic, Link, ImageInsert, InsertImageViaUrl, TableToolbar,
+          Paragraph, Heading, FontSize, FontColor, FontFamily, SpecialCharacters, Highlight, Indent, List,
+          SourceEditing, FindAndReplace, ShowBlocks, Code, CodeBlock, HtmlEmbed, BlockQuote, RemoveFormat,
+          Emoji, MediaEmbed, PageBreak, HorizontalLine, BlockToolbar, BalloonToolbar, Autosave, PasteFromOffice,
+          GeneralHtmlSupport, ImageToolbar, ImageStyle, ImageResize, ImageTextAlternative, ImageCaption,
+          ImageInline, ImageBlock, Table, TableProperties, TableCellProperties, TableColumnResize, TableCaption,
+          Underline, Strikethrough, Subscript, Superscript, HtmlComment, Bookmark, PasteFromMarkdownExperimental,
+          Mention, SimpleUploadAdapter
+        ],
+        toolbar: {
+          items: [
+            'sourceEditing', 'showBlocks', 'findAndReplace', 'fullscreen', '|', 'heading', '|', 'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor',
+            '|', 'bold', 'italic', 'underline', 'strikethrough', 'subscript', 'superscript', 'code', 'removeFormat',
+            '|', 'emoji', 'specialCharacters', 'horizontalLine', 'pageBreak', 'link', 'bookmark',
+            'insertImage', 'insertImageViaUrl', 'mediaEmbed', 'insertTable', 'highlight', 'blockQuote', 'codeBlock', 'htmlEmbed',
+            '|', 'alignment', '|', 'bulletedList', 'numberedList', 'todoList', 'outdent', 'indent'
+          ],
+          shouldNotGroupWhenFull: false
+        },
+        blockToolbar: ['fontSize', 'fontColor', 'fontBackgroundColor', '|', 'bold', 'italic', '|', 'link', 'insertImage', 'insertTable', '|', 'bulletedList', 'numberedList', 'outdent', 'indent'],
+        balloonToolbar: ['bold', 'italic', '|', 'link', 'insertImage', '|', 'bulletedList', 'numberedList'],
+        fontFamily: { supportAllValues: true },
+        fontSize: { options: [10, 12, 14, 'default', 18, 20, 22], supportAllValues: true },
+        fullscreen: {
+          onEnterCallback: c => {
+            c.classList.add('editor-container', 'editor-container_classic-editor', 'editor-container_include-block-toolbar', 'editor-container_include-word-count', 'editor-container_include-fullscreen', 'main-container');
+            parent.postMessage({ type: 'full-screen-toggle', data: true }, '*');
+          },
+          onLeaveCallback: c => parent.postMessage({ type: 'full-screen-toggle', data: false }, '*')
+        },
+        heading: {
+          options: Array.from({ length: 7 }, (_, i) => i === 0
+            ? { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' }
+            : { model: `heading${i}`, view: `h${i}`, title: `Heading ${i}`, class: `ck-heading_heading${i}` })
+        },
+        htmlSupport: { allow: [{ name: /^.*$/, styles: true, attributes: true, classes: true }] },
+        image: {
+          toolbar: ['toggleImageCaption', 'imageTextAlternative', '|', 'imageStyle:inline', 'imageStyle:wrapText', 'imageStyle:breakText', '|', 'resizeImage']
+        },
+        link: {
+          addTargetToExternalLinks: true,
+          defaultProtocol: 'https://',
+          decorators: {
+            toggleDownloadable: {
+              mode: 'manual',
+              label: 'Downloadable',
+              attributes: { download: 'file' }
             }
-        };
+          }
+        },
+        list: {
+          properties: { styles: true, startIndex: true, reversed: true }
+        },
+        mention: { feeds: [{ marker: '@', feed: [] }] },
+        language: 'vi',
+        licenseKey: LICENSE_KEY,
+        placeholder: 'Nhập nội dung của bạn ở đây',
+        translations: [translations],
+        initialData: ''
+      };
 
-        // Gửi thông báo cho Blazor biết đã sẵn sàng
-        window.addEventListener("DOMContentLoaded", () => {
-            parent.postMessage({ type: 'editor-ready' }, '*');
+      window.editorInstance = null;
+
+      window.initializeCKEditor = () => {
+        ClassicEditor.create(document.querySelector('#editor'), editorConfig).then(editor => {
+          window.editorInstance = editor;
+          document.querySelector('#editor-word-count').appendChild(editor.plugins.get('WordCount').wordCountContainer);
+          editor.model.document.on('change:data', () => {
+            parent.postMessage({ type: 'editor-data', data: editor.getData() }, '*');
+          });
         });
-    </script>
+      };
+
+      window.setContent = html => window.editorInstance?.setData(html);
+
+      window.addEventListener('message', e => {
+        if (!allowedOrigins.includes(e.origin)) return;
+        const { type, data } = e.data;
+        if (type === 'init-editor') window.initializeCKEditor();
+        if (type === 'set-content') window.setContent(data.html);
+      });
+
+      window.addEventListener('DOMContentLoaded', () => {
+        parent.postMessage({ type: 'editor-ready' }, '*');
+      });
+    });
+  </script>
 </body>
 </html>
