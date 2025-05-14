@@ -422,9 +422,12 @@
 
 
         window.setContent = (html) => {
-            if (window.editorInstance) {
-                window.editorInstance.setData(html);
-            }
+			var editorReady = setInterval(() => {
+				if(window.editorInstance){
+					clearInterval(editorReady);
+					window.editorInstance.setData(html);
+				}
+			}, 300);
         };
 
         // Gửi thông báo cho Blazor biết đã sẵn sàng
