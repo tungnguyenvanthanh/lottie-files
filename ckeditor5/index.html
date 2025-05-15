@@ -99,6 +99,8 @@
 
         const LICENSE_KEY = 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3NDc5NTgzOTksImp0aSI6IjlhYTIzOGQ5LTVmZTgtNGRiNS1iZTQ2LWU5MDU1ZmQ5N2Q3YiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiLCJzaCJdLCJ3aGl0ZUxhYmVsIjp0cnVlLCJsaWNlbnNlVHlwZSI6InRyaWFsIiwiZmVhdHVyZXMiOlsiKiJdLCJ2YyI6ImFjYjc4MGYzIn0.r1HikNOx5SoDUmvMKh4zQdmPHZdmjc5fgbU5FFSgl8eX8AjfN8rf9NzLBeK-P8c6X-EZTB15nTe1RLugMxio7A';
 
+        const uploadUrl = "https://xaydungmiendong.vn/api/files/upload-image";
+
         const editorConfig = {
             toolbar: {
                 items: [
@@ -379,7 +381,10 @@
             table: {
                 contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties']
             },
-            translations: [translations]
+            translations: [translations],
+            ckfinder: {
+                uploadUrl: uploadUrl
+            }
         };
 
         window.editorInstance = null;
