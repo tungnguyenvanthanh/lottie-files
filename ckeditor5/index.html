@@ -29,7 +29,6 @@
             Bookmark,
             Code,
             CodeBlock,
-            CKFinderUploadAdapter,
             Emoji,
             Essentials,
             FindAndReplace,
@@ -165,7 +164,6 @@
                 Bookmark,
                 Code,
                 CodeBlock,
-                CKFinderUploadAdapter,
                 Emoji,
                 Essentials,
                 FindAndReplace,
@@ -384,9 +382,7 @@
                 contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties']
             },
             translations: [translations],
-            ckfinder: {
-                uploadUrl: uploadUrl
-            }
+            extraPlugins: [ CustomUploadAdapterPlugin ], // ✅ Thêm plugin custom
         };
 
         window.editorInstance = null;
@@ -441,6 +437,44 @@
         window.addEventListener("DOMContentLoaded", () => {
             parent.postMessage({ type: 'editor-ready' }, '*');
         });
+
+        class CustomUploadAdapter {
+            constructor(loader) {
+                this.loader = loader;
+                this.uploadUrl = uploadUrl; // đã khai báo ở trên
+            }
+
+            upload() {
+                return this.loader.file
+                    .then(file => {
+                        const data = new FormData();
+                        data.append('upload', file);
+
+                        return fetch(this.uploadUrl, {
+                            method: 'POST',
+                            body: data
+                        })
+                        .then(response => response.json())
+                        .then(result => {
+                            // Phải trả về đúng định dạng CKEditor yêu cầu
+                            return {
+                                default: result.url
+                            };
+                        });
+                    });
+            }
+
+            abort() {
+                // Optional: nếu muốn hủy upload giữa chừng
+            }
+        }
+
+        function CustomUploadAdapterPlugin(editor) {
+            editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
+                return new CustomUploadAdapter(loader);
+            };
+        }
+
     </script>
 </body>
 </html>
