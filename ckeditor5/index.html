@@ -265,12 +265,9 @@
                         'editor-container_include-fullscreen',
                         'main-container'
                     )
-
-                    console.log('Entered fullscreen mode', container);
 					parent.postMessage({ type: 'full-screen-toggle', data: true }, '*');
                 },
                 onLeaveCallback: (container) => {
-                    console.log('Exited fullscreen mode', container);
 					parent.postMessage({ type: 'full-screen-toggle', data: false }, '*');
                 }
             },
