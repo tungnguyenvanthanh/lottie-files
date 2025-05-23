@@ -9,7 +9,8 @@
 
 .main-container {
 	font-family: 'Lato';
-	width: fit-content;
+	width: 100%;
+	box-sizing: border-box;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -18,15 +19,6 @@
 	font-family: 'Lato';
 	line-height: 1.6;
 	word-break: break-word;
-}
-
-.editor-container_classic-editor .editor-container__editor {
-	min-width: 795px;
-	max-width: 795px;
-}
-
-.editor-container_include-block-toolbar {
-	margin-left: 42px;
 }
 
 .ck-content h3.category {

@@ -471,18 +471,17 @@ window.addEventListener('message', async (event) => {
 
 // Gắn vào window để Blazor gọi được
 window.initializeCKEditor = () => {
-	ClassicEditor.create(document.querySelector('#editor'), editorConfig)
-		.then(editor => {
-			window.editorInstance = editor;
+	ClassicEditor.create(document.querySelector('#editor'), editorConfig).then(editor => {
+		window.editorInstance = editor;
 
-			const wordCount = editor.plugins.get('WordCount');
-			document.querySelector('#editor-word-count').appendChild(wordCount.wordCountContainer);
+		const wordCount = editor.plugins.get('WordCount');
+		document.querySelector('#editor-word-count').appendChild(wordCount.wordCountContainer);
 
-			editor.model.document.on('change:data', () => {
-				const data = editor.getData();
-				parent.postMessage({ type: 'editor-data', data }, '*');
-			});
+		editor.model.document.on('change:data', () => {
+			const data = editor.getData();
+			parent.postMessage({ type: 'editor-data', data }, '*');
 		});
+	});
 };
 
 
