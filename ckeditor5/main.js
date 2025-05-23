@@ -80,6 +80,8 @@ const {
 
 const LICENSE_KEY = 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3Nzk1ODA3OTksImp0aSI6IjcyNThiYmYyLTZiNTEtNDhmZC05MjBjLWY3ZDcyNzE2MTc5OSIsImxpY2Vuc2VkSG9zdHMiOlsidHR2bC5pby52biIsInR1bmduZ3V5ZW52YW50aGFuaC5naXRodWIuaW8iLCJ4YXlkdW5nbWllbmRvbmcudm4iXSwidXNhZ2VFbmRwb2ludCI6Imh0dHBzOi8vcHJveHktZXZlbnQuY2tlZGl0b3IuY29tIiwiZGlzdHJpYnV0aW9uQ2hhbm5lbCI6WyJjbG91ZCIsImRydXBhbCJdLCJmZWF0dXJlcyI6WyJEUlVQIiwiRTJQIiwiRTJXIiwiQk9YIl0sInZjIjoiM2Y2NDFjZTAifQ.j7TX2XIpIBNAhlvGyOzsU2h_Dx0S9BZq2Pd1ok2aabncDp2_FjOoG6vfrAhAFAUKA7Xdj7dZZt_JjgLPjiyJFg';
 
+const uploadUrl = "https://xaydungmiendong.vn/api/files/upload-image";
+
 const editorConfig = {
 	toolbar: {
 		items: [
