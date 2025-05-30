@@ -453,8 +453,9 @@ window.editorInstance = null;
 
 const allowedOrigins = [
 	'https://ttvl.io.vn',
+	'https://games.ttvl.io.vn',
 	'https://xaydungmiendong.vn',
-	'https://localhost:7075'
+	'https://localhost:1001'
 ];
 
 window.addEventListener('message', async (event) => {
